@@ -1,0 +1,24 @@
+Public class EmailManager{
+    Public void sendMail(string address,string subject,string body){
+        Messaging.singemailmessage Mail=new messaging.singleemailmessage();
+        string[] toaddresses= new string[]{address}
+        mail.settoaddresses(toaddresses);
+        mail.setsubject(subject);
+        mail.setPlainTextBody(body);
+        //Pass Email Message to send build in sendemailmethod
+        Messaging.sendemailResult[] results=messaging.sendemail(new Messaging.singleemailmessage[]{mail});
+         InspectResults(results);
+
+    }
+    private static boolean InspectResults(Messaging.sendemailResult[] res)
+        boolean sendresult=true;
+        if(res.isSuccess()){
+            system.debug('email sent succesfully');
+        }
+        else{
+            sendresult=false; 
+            system.debug('the following errors occured'+res.geterrors()); 
+        }
+     return sendresult;
+    }
+}
